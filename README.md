@@ -1,0 +1,1 @@
+# smpn26batanghari
