@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Penilaian;
 
 class PenilaianController extends Controller
 {
@@ -69,7 +70,13 @@ class PenilaianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $penilaian = Penilaian::findOrFail($id);
+
+        $penilaian->nilai = $request->nilai;
+        $penilaian->keterangan = $request->ketarangan;
+        $penilaian->save();
+
+        return redirect()->back();
     }
 
     /**

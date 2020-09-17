@@ -24,13 +24,14 @@ Route::middleware('auth', 'checkRole:admin')->namespace('Admin')->prefix('admin'
 Route::middleware('auth', 'checkRole:siswa')->namespace('Siswa')->prefix('siswa')->group(function () {
     Route::resource('materi', 'MateriController');
     Route::resource('latihan', 'LatihanController');
+    Route::resource('penilaian', 'PenilaianController');
 });
 
 
 Route::middleware('auth', 'checkRole:guru')->namespace('Guru')->prefix('guru')->group(function () {
     Route::resource('guru-materi', 'MateriController');
     Route::resource('guru-latihan', 'LatihanController');
-    Route::resource('penilaian', 'PenilaianController');
+    Route::resource('guru-penilaian', 'PenilaianController');
 });
 
 Route::prefix('orang-tua')->group(function () {

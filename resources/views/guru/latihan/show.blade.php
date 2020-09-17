@@ -62,7 +62,7 @@
                             <td>Judul Latihan</td><td class="text-right">:</td><td class="text-left">{{ $latihan->judul_latihan }}</td>
                         </tr>
                         <tr>
-                            <td>File Latihan</td><td class="text-right">:</td><td class="text-left">{{ $latihan->file_latihan }}</td>
+                            <td>File Latihan</td><td class="text-right">:</td><td class="text-left"><a class="btn btn-primary" href="{{ Storage::url($latihan->file_latihan) }}">Download</a></td>
                         </tr>
                         <tr>
                             <td>Guru</td><td class="text-right">:</td><td class="text-left">{{ $latihan->user->guru->nama_guru }}</td>
@@ -79,7 +79,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Siswa</th>
-                            <th class="text-center">File Latihan</th>
+                            <th class="text-center">File Jawaban Siswa</th>
                             <th class="text-center">Tanggal Upload</th>
                             <th class="text-center">Nilai</th>
                             <th class="text-center">Penilaian</th>
@@ -90,10 +90,13 @@
                             <tr>
                                 <td style="width:5%">{{ $loop->iteration }}</td>
                                 <td style="width:19%">{{ $data->siswa->nama_siswa }}</td>
-                                <td style="width:19%">{{ $data->file_siswa ?? 'Tidak ada file' }}</td>
+                                <td style="width:19%"><a class="btn btn-info" href="{{ Storage::url($data->file_siswa ?? 'Tidak ada file') }}">Download</a></td>
                                 <td style="width:19%">{{ $data->created_at }}</td>
                                 <td style="width:19%">{{ $data->nilai }}</td>
-                                <td style="width:19%"><button class="btn btn-sm btn-success">Beri Nilai</button></td>
+                                <td style="width:19%">
+                                    {{-- <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-tambah-dokumen">Beri Nilai</button> --}}
+                                    <a class="d-print-none btn btn-sm btn-success" href="#" data-toggle="modal" data-target=".bs-example-modal-center">Beri Penilaian</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -104,6 +107,41 @@
     </div><!-- End row -->
 </div> <!-- container-fluid -->
 
+{{-- modal latihan --}}
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ route('guru-penilaian.update', $data->id ?? '') }}" method="POST">
+            @csrf
+            @method('PATCH')
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Penilaian Siswa - {{ $data->siswa->nama_siswa }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nilai</label>
+                        <input type="text" class="form-control" name="nilai" id="nilai" placeholder="Nilai angka">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" class="form-control" name="keterangan" id="nilai" placeholder="Keterangan">
+                    </div>
+
+                    {{-- <div class="form-group">
+                        <label>File Jawaban</label>
+                        <input type="text" id="foto" name="file_siswa" accept=".pdf, .docx, .doc, .xls, .xlsx" class="filestyle" data-buttonname="btn-info">
+                    </div> --}}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- end modal latihan--}}
 
 @endsection
 

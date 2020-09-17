@@ -86,7 +86,8 @@
                                 <td>{{ $item->user->guru->nama_guru }}</td>
                                 <td>{{ $item->judul_latihan }}</td>
                                 <td><a class="btn btn-info" href="{{ Storage::url($item->file_latihan) }}">Download File</a></td>
-                                <td><a class="btn btn-primary" href="#">Upload Jawaban</a></td>
+                                {{-- <td><a class="btn btn-primary" href="#">Upload Jawaban</a></td> --}}
+                                <td><button type="button" class="btn btn-primary waves-light waves-effect" data-toggle="modal" data-target=".bs-example-modal-center"><i class="fa fa-camera"></i> Upload jawaban</button></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -96,6 +97,40 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
 </div> <!-- container-fluid -->
+
+{{-- modal latihan --}}
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ route('penilaian.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+                <input type="hidden" name="latihan_id" value="{{ $item->id }}">
+                <input type="hidden" name="kelas_id" value="{{ $item->kelas->id }}">
+                <input type="hidden" name="siswa_id" value="{{ Auth::user()->siswa->id }}">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Form Upload Latihan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nama Latihan</label>
+                        <input type="text" class="form-control" name="nama_ruas" id="nama_ruas" value="{{ $item->judul_latihan }}" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>File Jawaban</label>
+                        <input type="file" id="foto" name="file_siswa" accept=".pdf, .docx, .doc, .xls, .xlsx" class="filestyle" data-buttonname="btn-info">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- end modal latihan--}}
+
 @endsection
 
 @section('script')
@@ -114,7 +149,7 @@
 <!-- Responsive examples -->
 <script src="{{ asset('assets/plugins/datatables/dataTables.responsive.min.js')}}"></script>
 <script src="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
-
+<script src="{{ asset('assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js')}}"></script>
 <!-- Datatable init js -->
 {{-- <script src="{{ asset('assets/pages/datatables.init.js')}}"></script> --}}
 <script>
