@@ -88,7 +88,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nisn }}</a></td>
-                                <td>{{ $item->kelas_id }}</a></td>
+                                <td>{{ $item->kelas->nama_kelas }}</a></td>
                                 <td>{{ $item->nama_siswa }}</td>
                                 <td>{{ $item->jenis_kelamin }}</td>
                                 <td>{{ $item->tempat_lahir }}</td>
