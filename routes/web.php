@@ -34,6 +34,6 @@ Route::middleware('auth', 'checkRole:guru')->namespace('Guru')->prefix('guru')->
     Route::resource('guru-penilaian', 'PenilaianController');
 });
 
-Route::prefix('orang-tua')->group(function () {
-    //
+Route::middleware('auth', 'checkRole:orangtua')->namespace('Ortu')->prefix('ortu')->group(function () {
+    Route::get('lihat-nilai', 'PenilaianController@index')->name('lihat-nilai');
 });

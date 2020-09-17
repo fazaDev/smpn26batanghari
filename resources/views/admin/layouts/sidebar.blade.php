@@ -67,6 +67,14 @@
                     </a>
                 </li>
                 @endif
+
+                @if(Auth::user()->role == 'orangtua')
+                <li>
+                    <a href="{{ route('lihat-nilai') }}" class="waves-effect">
+                        <i class="mdi mdi-account-switch"></i> <span> Lihat Nilai Anak </span>
+                    </a>
+                </li>
+                @endif
                 {{-- <li>
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-database"></i><span> Manajemen <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                     <ul class="submenu">
